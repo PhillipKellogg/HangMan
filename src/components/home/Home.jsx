@@ -26,20 +26,30 @@ newWord("hello");
 console.log(guessArr, correctArr);
 
 export default class Home extends React.Component {
+  state = { guess: guessArr };
+
   newGuess = e => {
     //Here we can use this to update the website information.
     e.preventDefault();
-    if (e.target.value != "" || undefined || null) {
+    if (e.target.value !== "" || undefined || null) {
       for (let i = 0; i < correctArr.length; i++) {
         if (e.target.value === correctArr[i]) {
           guessArr[i] = correctArr[i];
+          this.setState({
+            guess: guessArr
+          });
         }
       }
       console.log(e.target.value);
       console.log(guessArr);
     }
   };
+
+  // componentDidUpdate() {}
+
   render() {
+    console.log(this.state.guess);
+
     return (
       <form onSubmit={this.newGuess}>
         <div class="segment">
@@ -47,7 +57,7 @@ export default class Home extends React.Component {
         </div>
         <img className="hangman__img" src={hangman} alt="" />
         <div className="hangman__input">
-          <Guess guess={guessArr.toString()} />
+          <h2 className="guess">{this.state.guess.toString()} </h2>
           {/* <h2 className="guess">{guessArr.toString()}</h2> */}
           <div>
             <label>
