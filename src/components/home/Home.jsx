@@ -13,6 +13,8 @@ import Hm7 from "../../Assets/hangman8.png";
 let hangman = Hm3;
 let guessArr = [];
 let correctArr = [];
+let error = 0;
+let anything = false;
 
 let newWord = wrd => {
   guessArr = [];
@@ -26,20 +28,44 @@ newWord("hello");
 console.log(guessArr, correctArr);
 
 export default class Home extends React.Component {
-  state = { guess: guessArr };
+  state = { guess: guessArr, image: Hm1 };
 
   newGuess = e => {
     //Here we can use this to update the website information.
     e.preventDefault();
+    anything = false;
     if (e.target.value !== "" || undefined || null) {
       for (let i = 0; i < correctArr.length; i++) {
         if (e.target.value === correctArr[i]) {
           guessArr[i] = correctArr[i];
+          anything = true;
           this.setState({
             guess: guessArr
           });
         }
       }
+      if (!anything) {
+        error += 1;
+
+        if (error === 1) {
+          hangman = Hm2;
+        } else if (error === 2) {
+          hangman = Hm3;
+        } else if (error === 3) {
+          console.log(error);
+          hangman = Hm4;
+        } else if (error === 4) {
+          hangman = Hm5;
+        } else if (error === 5) {
+          hangman = Hm6;
+        } else if (error === 6) {
+          hangman = Hm7;
+        }
+        this.setState({
+          image: hangman
+        });
+      }
+
       console.log(e.target.value);
       console.log(guessArr);
     }
@@ -55,7 +81,7 @@ export default class Home extends React.Component {
         <div class="segment">
           <h1>Hangman</h1>
         </div>
-        <img className="hangman__img" src={hangman} alt="" />
+        <img className="hangman__img" src={this.state.image} alt="" />
         <div className="hangman__input">
           <h2 className="guess">{this.state.guess.toString()} </h2>
           {/* <h2 className="guess">{guessArr.toString()}</h2> */}
