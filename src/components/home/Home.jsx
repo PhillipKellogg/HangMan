@@ -10,13 +10,14 @@ import Hm5 from "../../Assets/hangman5.png";
 import Hm6 from "../../Assets/hangman6.png";
 import Hm7 from "../../Assets/hangman8.png";
 import Hm8 from "../../Assets/hangman9.png";
-
+const easyURL = "http://localhost:8000/";
+const mediumURL = "http://localhost:8000/medium";
+const hardURL = "http://localhost:8000/hard";
 let hangman = Hm3;
 let guessArr = [];
 let correctArr = [];
 let error = 0;
 let anything = false;
-
 let newWord = wrd => {
   guessArr = [];
   for (let i = 0; i < wrd.length; i++) {
@@ -24,12 +25,17 @@ let newWord = wrd => {
     guessArr[i] = "_";
   }
 };
-
-newWord("hello");
 console.log(guessArr, correctArr);
+newWord(newWord1);
+axios.get(`http://localhost:8000`).then(response => {
+  console.log(response.data);
+  let newWord1 =
+    response.data[Math.floor(Math.random() * response.data.length)];
+});
 
+let alphabet = [];
 export default class Home extends React.Component {
-  state = { guess: guessArr, image: Hm1 };
+  state = { guess: guessArr, image: Hm1, ltr: [] };
 
   newGuess = e => {
     //Here we can use this to update the website information.
@@ -47,6 +53,12 @@ export default class Home extends React.Component {
       }
       if (!anything) {
         error += 1;
+        alphabet.push(e.target.value);
+        this.setState({
+          // ltr.push(e.target.value)
+          ltr: alphabet
+        });
+        console.log(this.state.ltr);
 
         if (error === 1) {
           hangman = Hm2;
@@ -87,6 +99,11 @@ export default class Home extends React.Component {
       <form onSubmit={this.newGuess}>
         <div class="segment">
           <h1>Hangman</h1>
+          <h2>USED LETTERS</h2>
+          <h2>
+            {/* {console.log(this.state.ltr.alphabet)} */}
+            <strike>{this.state.ltr.toString()}</strike>
+          </h2>
         </div>
         <img className="hangman__img" src={this.state.image} alt="" />
         <div className="hangman__input">
