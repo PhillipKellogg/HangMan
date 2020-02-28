@@ -1,5 +1,6 @@
 import React from "react";
 import "./Home.scss";
+import Guess from "./../guess/Guess";
 
 import Hm1 from "../../Assets/hangman1.png";
 import Hm2 from "../../Assets/hangman2.png";
@@ -10,13 +11,33 @@ import Hm6 from "../../Assets/hangman6.png";
 import Hm7 from "../../Assets/hangman8.png";
 
 let hangman = Hm3;
+let guessArr = [];
+let correctArr = [];
+
+let newWord = wrd => {
+  guessArr = [];
+  for (let i = 0; i < wrd.length; i++) {
+    correctArr[i] = wrd[i];
+    guessArr[i] = "_";
+  }
+};
+
+newWord("hello");
+console.log(guessArr, correctArr);
 
 export default class Home extends React.Component {
   newGuess = e => {
     //Here we can use this to update the website information.
     e.preventDefault();
-
-    console.log(e.target.text.value);
+    if (e.target.value != "" || undefined || null) {
+      for (let i = 0; i < correctArr.length; i++) {
+        if (e.target.value === correctArr[i]) {
+          guessArr[i] = correctArr[i];
+        }
+      }
+      console.log(e.target.value);
+      console.log(guessArr);
+    }
   };
   render() {
     return (
@@ -26,6 +47,8 @@ export default class Home extends React.Component {
         </div>
         <img className="hangman__img" src={hangman} alt="" />
         <div className="hangman__input">
+          <Guess guess={guessArr.toString()} />
+          {/* <h2 className="guess">{guessArr.toString()}</h2> */}
           <div>
             <label>
               <input
@@ -33,6 +56,7 @@ export default class Home extends React.Component {
                 placeholder="Guess"
                 maxlength="1"
                 required
+                onChange={this.newGuess}
                 className="hangman__text"
               />
             </label>
