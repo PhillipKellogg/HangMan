@@ -9,6 +9,7 @@ import Hm4 from "../../Assets/hangman4.png";
 import Hm5 from "../../Assets/hangman5.png";
 import Hm6 from "../../Assets/hangman6.png";
 import Hm7 from "../../Assets/hangman8.png";
+import Hm8 from "../../Assets/hangman9.png";
 
 let hangman = Hm3;
 let guessArr = [];
@@ -67,14 +68,20 @@ export default class Home extends React.Component {
       }
 
       console.log(e.target.value);
-      console.log(guessArr);
+      console.log(correctArr);
+      if (this.state.guess.toString() === correctArr.toString()) {
+        this.setState({
+          image: Hm8
+        });
+      }
+      console.log(this.state.guess);
     }
   };
 
   // componentDidUpdate() {}
 
   render() {
-    console.log(this.state.guess);
+    // console.log(this.state.guess);
 
     return (
       <form onSubmit={this.newGuess}>
