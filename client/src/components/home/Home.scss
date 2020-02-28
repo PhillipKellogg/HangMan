@@ -137,9 +137,15 @@ button {
   }
 
   &.hangman__btn {
-    display: block;
+    // display: block;
     width: 20%;
+    margin-bottom: 5px;
     color: $color-red;
+    &--wrapper {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
   }
 }
 
@@ -158,6 +164,7 @@ button {
   &__img {
     height: 50vh;
     margin-left: 25%;
+    margin-bottom: -80px;
   }
   &__input {
     display: flex;
@@ -171,4 +178,9 @@ button {
     align-self: center;
     justify-content: center;
   }
+}
+.used {
+  margin-bottom: 0;
+  color: black;
+  font-size: 2rem;
 }
