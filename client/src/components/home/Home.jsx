@@ -2,6 +2,7 @@ import React from "react";
 import "./Home.scss";
 import Guess from "./../guess/Guess";
 import axios from "axios";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 
 import Hm1 from "../../Assets/hangman1.png";
 import Hm2 from "../../Assets/hangman2.png";
@@ -35,7 +36,7 @@ console.log(guessArr, correctArr);
 let alphabet = [];
 export default class Home extends React.Component {
   componentDidMount() {
-    axios.get(`http://localhost:8000`).then(response => {
+    axios.get(easyURL).then(response => {
       console.log(response.data);
       newWord(response.data[Math.floor(Math.random() * response.data.length)]);
       this.setState({
@@ -97,6 +98,8 @@ export default class Home extends React.Component {
       }
       console.log(this.state.guess);
     }
+    // document.getElementById("Goku").value = "";
+    e.target.value = "";
   };
 
   // componentDidUpdate() {}
@@ -107,9 +110,26 @@ export default class Home extends React.Component {
     return (
       <form onSubmit={this.newGuess}>
         <div class="segment">
+          <div className="hangman__btn--wrapper">
+            <Link to="/">
+              <button type="submit" class="hangman__btn">
+                Easy
+              </button>
+            </Link>
+            <Link to="/medium">
+              <button type="submit" class="hangman__btn">
+                Medium
+              </button>
+            </Link>
+            <Link to="/hard">
+              <button type="submit" class="hangman__btn">
+                Hard
+              </button>
+            </Link>
+          </div>
           <h1>Hangman</h1>
           <h2>USED LETTERS</h2>
-          <h2>
+          <h2 className="used">
             {/* {console.log(this.state.ltr.alphabet)} */}
             <strike>{this.state.ltr.toString()}</strike>
           </h2>
@@ -127,13 +147,11 @@ export default class Home extends React.Component {
                 required
                 onChange={this.newGuess}
                 className="hangman__text"
+                // id="Goku"
               />
             </label>
             {/* <span>_ _ _ _ _ _</span> */}
           </div>
-          <button type="submit" class="hangman__btn">
-            Submit
-          </button>
         </div>
       </form>
     );
