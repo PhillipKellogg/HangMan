@@ -134,9 +134,9 @@ button {
     }
   }
 
-  &.red {
+  &.hangman__btn {
     display: block;
-    width: 100%;
+    width: 20%;
     color: $color-red;
   }
 }
@@ -149,5 +149,24 @@ button {
   label {
     margin: 0;
     flex: 1;
+  }
+}
+
+.hangman {
+  &__img {
+    height: 50vh;
+    margin-left: 25%;
+  }
+  &__input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__text {
+    width: 100px;
+    margin: auto;
+    align-self: center;
+    justify-content: center;
   }
 }
